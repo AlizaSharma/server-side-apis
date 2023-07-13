@@ -6,6 +6,7 @@ var humidityEl =document.querySelector(".card-text-two");
 var windEl =document.querySelector(".card-text-three");
 var cityEl =document.querySelector(".cardTodayCityName");
 var dateEl =document.querySelector(".cardTodayDate");
+var fiveDayForecast =document.querySelector(".row");
 
 // take input and plug it into api query 
 var apiKey = "894a8632519c8ba9df1569e892b67fd0";
@@ -39,14 +40,17 @@ async function getCurrentWeather(lat,lon){
       var windSpeed = data.list[0].wind.speed
       var humidity = data.list[0].main.humidity
       var icon = data.list[0].weather[0].icon
-      var date = data.list[0].dt_txt
+      var date = data.list[0].dt
 
-      
+      var dateConversion = new Date(date * 1000 - 28800)
+      var formattedDate = dateConversion.getUTCMonth() + 1 + "-" + dateConversion.getUTCDate() + "-" + dateConversion.getUTCFullYear()
+    
+      dateEl.innerHTML = formattedDate;
     
       var weatherImg = document.querySelector(".icon-box");
       weatherImg.innerHTML = "<img" + " src=" + "http://openweathermap.org/img/wn/" + icon + "@2x.png>";
 
-      dateEl.innerHTML = date 
+    
 
       
     tempEl.innerHTML = temp + " \xB0" + "F";
@@ -57,6 +61,8 @@ async function getCurrentWeather(lat,lon){
 
     cityEl.innerHTML = cityName;
 
+   
+
      
     })
     .catch(function(error){
@@ -64,7 +70,6 @@ async function getCurrentWeather(lat,lon){
     })
 
 }
-
 
 searchButtonEl.addEventListener("click", function(){
    // grab content typed in search bar 
@@ -80,6 +85,22 @@ searchButtonEl.addEventListener("click", function(){
 
 })
 
+// five day forecast 
+function fiveDayForecast(){
+    fetch("api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon+ "&appid=" + apiKey + "&units=imperial")
+    .then(function(response){
+        return response.json
+    })
+    .then(function(data){
+        console.log(data)
+    })
+
+    // for loop
+    
+
+    
+
+}
 
 
 
