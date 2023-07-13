@@ -22,12 +22,25 @@ async function getLatLon(cityName){
 }
 
 async function getCurrentWeather(lat,lon){
-    await fetch("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey)
+    await fetch("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&units=imperial")
     .then(function(response){
         return response.json();
     })
     .then(function(data){
+      console.log(data)  
+      var cityName = data.city.name
+      console.log(cityName)
+      var temp = data.list[0].main.temp
+      var windSpeed = data.list[0].wind.speed
+      var humidity = data.list[0].main.humidity
+      var icon = data.list[0].weather[0].icon
+      
+    
+      var weatherImg = document.querySelector(".icon-box");
+      weatherImg.innerHTML = "<img" + " src=" + "http://openweathermap.org/img/wn/" + icon + "@2x.png>";
+
         
+     
     })
     .catch(function(error){
         
