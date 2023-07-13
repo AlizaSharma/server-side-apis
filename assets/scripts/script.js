@@ -9,16 +9,32 @@ function getCurrentWeather(lat, lon){
 
 }
 
-function getLatLon(cityName){
-    fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=5&appid=" + apiKey)
+async function getLatLon(cityName){
+    await fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=" + apiKey)
         .then(function(response){
           return response.json();  
         })
         .then(function(data){
-           console.log(data)
-           getCurrentWeather(data.lat,data.lon)
+           
+           getCurrentWeather(data[0].lat,data[0].lon)
         })
+    
 }
+
+async function getCurrentWeather(lat,lon){
+    await fetch("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey)
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data){
+        
+    })
+    .catch(function(error){
+        
+    })
+
+}
+
 
 searchButtonEl.addEventListener("click", function(){
    // grab content typed in search bar 
@@ -30,8 +46,11 @@ searchButtonEl.addEventListener("click", function(){
 
 
    // query the current weather api
+   getCurrentWeather(searchInputEl.value)
 
 })
+
+
 
 
 
