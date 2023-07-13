@@ -1,6 +1,11 @@
 // store references to html elements for search inputed in search button 
 var searchInputEl = document.querySelector(".textVal");
 var searchButtonEl = document.querySelector("#button-addon2");
+var tempEl =document.querySelector(".card-text");
+var humidityEl =document.querySelector(".card-text-two");
+var windEl =document.querySelector(".card-text-three");
+var cityEl =document.querySelector(".cardTodayCityName");
+
 
 // take input and plug it into api query 
 var apiKey = "894a8632519c8ba9df1569e892b67fd0";
@@ -39,7 +44,21 @@ async function getCurrentWeather(lat,lon){
       var weatherImg = document.querySelector(".icon-box");
       weatherImg.innerHTML = "<img" + " src=" + "http://openweathermap.org/img/wn/" + icon + "@2x.png>";
 
-        
+      
+    tempEl.innerHTML = temp + " \xB0" + "F";
+
+    humidityEl.innerHTML = humidity + "%";
+
+    windEl.innerHTML = windSpeed + " mph";
+
+    cityEl.innerHTML = cityName;
+
+
+
+
+
+
+
      
     })
     .catch(function(error){
